@@ -41,13 +41,22 @@
         <div class="jumbotron">
             <h1>Generate a URL!</h1>
             <hr>
-            <form>
+            <form action="/generateUrl" method="POST">
                 <label>Enter URL:</label>
                 <input type="text" id="longUrl" name="longUrl" required>
                 <button type="submit" id="generateUrlBtn">Generate</button>
             </form>
+            {{% if short_url %}}
+            <div>
+                <h4>New URL:</h4>
+                <b><p>{{ short_url }}</p></b>
+            </div>
+            <div>
+                <h4>Unique ID:</h4>
+                <b><p>{{ unique_id }}</p></b>
+            </div>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='js/generateUrl.js') }}"></script>
+    <!--<script src="{{ url_for('static', filename='js/generateUrl.js') }}"></script>-->
 </body>
 </html>
