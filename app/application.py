@@ -139,24 +139,31 @@ def clear_click_data(unique_id):
 
 @app.route("/")
 def index():
-	return render_template('index.html')
+	# add logging here
+	return render_template('index.html') # renders the index page for consumer / clients
 
-@app.route("/a/<id>")
+@app.route("/a/<id>") # change to something shorter
 def shortened_url_entry(id):
-	id = str(id)
-	if id == "":
-		return "hello"
-	else:
-		url = get_url(id)
-		return redirect(url, code=303)
+	id = str(id) # passes it as a string just in case
+	if add_click(id) == 1: # adds a click and gets the exit code of the operation
+		url = get_url(id) # gets the url that maps to the unique_id supplied
+		return redirect(url, code=303) # redirects the consumer to the real page 
+	else: # adding a click didnt work
+		# implement error handing for the server
+		pass
 
-@app.route("/generateUrl", methods=['POST'])
+@app.route("/generateUrl", methods=['POST', 'GET'])
 def generateUrl():
-	_long_url = request.form.get('longUrl')
-	if _long_url is not None:
-		return render_template("generated.html")
-	else:
-		return json.dumps({"html":"<h1>An error occured</h1>"})
+	if request.method == 'POST': # checks if a post request was made
+		long_url = request.form # retrieves the long_url from the request
+		unique_id = generate_unique_id() # generates a new unique_id
+		short_url = "gup.py/a/" + unique_id # creates the short url based on the unique_id
+		if create_url_mapping(unique_id, long_url) == 1: # creates the url mapping in DB and gets exit_code 
+			return render_template("index.html", short_url=short_url, unique_id=unique_id) # renders the index page with new parameter
+		else: # creating_the_url mapping didnt work
+			# add error handling for this function , server side
+			pass
+		
 
 
 if __name__ == '__main__':
