@@ -1,7 +1,7 @@
 from flask import Flask, redirect, render_template, request, json
 import sqlite3
 import os
-
+import random
 """ 
 
 -- url_data --
@@ -19,6 +19,8 @@ cwd = os.path.dirname(os.path.realpath(__file__))
 
 conn = sqlite3.connect(cwd + "/" + sqlite_file)
 c = conn.cursor()
+
+characters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 # --- MODULES --- #
 
@@ -43,21 +45,32 @@ def delete_url_data():
 """ Gets the url thats mapped to a a specific unique_id from the sqlite database """
 
 def get_url(unique_id):
+	conn = sqlite3.connect(cwd + "/" + sqlite_file)
+	c = conn.cursor()
 	try:
 		c.execute("""SELECT url FROM url_data WHERE unique_id = %s;""", [unique_id]) # gets the url from the unique_id
 		return str(c.fetchall()) # returns back that the query retrieved from the db as a str (just incase)
 	except Exception as e: # Unknown error
 		return 0 # operation was unsuccessful so send back exit_code=0
   
-""" Generates a unique_id for a url, that is no present in the database 
+""" Generates a unique_id for a url, that is no present in the database """
 
 def generate_unique_id():
-	latest_id = int(json.load("metadata.json")["latest_id"])
-	new_id += 1 if latest_id 
-"""
+	conn = sqlite3.connect(cwd + "/" + sqlite_file)
+	c = conn.cursor()
+	unique_id = ""
+	for i in range(4):
+		unique_id += str(random.randint(0, 9))
+	if not c.execute("""SELECT url FROM url_data WHERE unique_id = ?""", [unique_id]).fetchall():
+		return unique_id
+	else:
+		generate_unique_id()
+
 """ Creates a new mapping in the database with a unique_id and a url """
 
 def create_url_mapping(unique_id, url):
+	conn = sqlite3.connect(cwd + "/" + sqlite_file)
+	c = conn.cursor()
 	exit_code = 0 # init exit_code var
 	try:
 		c.execute("""INSERT INTO url_data (unique_id, url, clicks) VALUES (?, ?, 0);""", [unique_id, url]) # inserts unique_id and url in db
@@ -165,6 +178,7 @@ def generateUrl():
 			pass
 		
 if __name__ == '__main__':
+	read_url_data()
 	app.run(port=80,debug=True)
 
 	

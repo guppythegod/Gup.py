@@ -46,7 +46,7 @@
                 <input type="text" id="longUrl" name="longUrl" required>
                 <button type="submit" id="generateUrlBtn">Generate</button>
             </form>
-            {{% if short_url %}}
+            {% if short_url %}
             <div>
                 <h4>New URL:</h4>
                 <b><p>{{ short_url }}</p></b>
@@ -55,6 +55,7 @@
                 <h4>Unique ID:</h4>
                 <b><p>{{ unique_id }}</p></b>
             </div>
+            {% endif %}
         </div>
     </div>
     <!--<script src="{{ url_for('static', filename='js/generateUrl.js') }}"></script>-->
