@@ -3,12 +3,57 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Gup.py | URL Shortner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <h1>Worked</h1>    
+    <style>
+        .jumbotron {
+            margin-top: 10%;
+        }
+    </style>
+        <nav class="navbar navbar-inverse navbar-fixed-top _navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-content" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a href=# class="navbar-brand">The Gup.py URL Shortner</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="collapse-content">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/">Create URL</a></li>
+                            <li class="active"><a href=#>Delete URL</a></li>
+                            <li><a href="/changeUrl">Change URL</a></li>
+                            <li><a href="/checkStats">Check Statistics</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>We're Sorry to See You Leave!</h1>
+            <hr>
+            <form action="/deleteUrl" method="POST">
+                <label>Enter Unique ID:</label>
+                <input type="text" id="uniqueID" name="uniqueID" required>
+                <button type="submit" id="generateUrlBtn">Delete</button>
+            </form>
+            {% if delete_url_response %}
+            <div>
+                <br>
+                <b><h3>{{ delete_url_response }}</h3></b>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <!--<script src="{{ url_for('static', filename='js/generateUrl.js') }}"></script>-->
 </body>
 </html>

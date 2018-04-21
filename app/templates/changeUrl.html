@@ -29,9 +29,9 @@
                     </div>
                     <div class="collapse navbar-collapse" id="collapse-content">
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href=#>Create URL</a></li>
+                            <li><a href="/">Create URL</a></li>
                             <li><a href="/deleteUrl">Delete URL</a></li>
-                            <li><a href="/changeUrl">Change URL</a></li>
+                            <li class="active"><a href="/changeUrl">Change URL</a></li>
                             <li><a href="/checkStats">Check Statistics</a></li>
                         </ul>
                     </div>
@@ -39,26 +39,20 @@
             </nav>
     <div class="container">
         <div class="jumbotron">
-            <h1>Generate a URL!</h1>
+            <h1>Need Something Different?</h1>
             <hr>
-            <form action="/generateUrl" method="POST">
-                <label>Enter URL:</label>
-                <input type="text" id="longUrl" name="longUrl" required>
-                <button type="submit" id="generateUrlBtn">Generate</button>
+            <p>Note: Changing the URL resets all the data linked to your Unique ID</p>
+            <form action="/changeUrl" method="POST">
+                <label>Enter Unique ID:</label>
+                <input type="text" id="uniqueID" name="uniqueID" required>
+                <label>Enter New URL:</label>
+                <input type="text" id="newUrl" name="newUrl" required>
+                <button type="submit" id="generateUrlBtn">Change</button>
             </form>
-            {% if error_response %}
+            {% if change_url_response %}
             <div>
-                <h3>{{ error_response }}</h3>
-            </div>
-            {% endif %}
-            {% if short_url %}
-            <div>
-                <h3>New URL:</h3>
-                <b><p>{{ short_url }}</p></b>
-            </div>
-            <div>
-                <h3>Unique ID:</h3>
-                <b><p>{{ unique_id }}</p></b>
+                <br>
+                <b><h3>{{ change_url_response }}</p></h3>
             </div>
             {% endif %}
         </div>

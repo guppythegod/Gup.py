@@ -29,36 +29,33 @@
                     </div>
                     <div class="collapse navbar-collapse" id="collapse-content">
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href=#>Create URL</a></li>
+                            <li><a href="/">Create URL</a></li>
                             <li><a href="/deleteUrl">Delete URL</a></li>
-                            <li><a href="/changeUrl">Change URL</a></li>
-                            <li><a href="/checkStats">Check Statistics</a></li>
+                            <li ><a href="/changeUrl">Change URL</a></li>
+                            <li class="active"><a href="/checkStats">Check Statistics</a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
     <div class="container">
         <div class="jumbotron">
-            <h1>Generate a URL!</h1>
+            <h1>Need Something Different?</h1>
             <hr>
-            <form action="/generateUrl" method="POST">
-                <label>Enter URL:</label>
-                <input type="text" id="longUrl" name="longUrl" required>
-                <button type="submit" id="generateUrlBtn">Generate</button>
+            <form action="/checkStats" method="POST">
+                <label>Enter Unique ID:</label>
+                <input type="text" id="uniqueID" name="uniqueID" required>
+                <button type="submit" id="generateUrlBtn">Search</button>
             </form>
-            {% if error_response %}
+            {% if clicks %}
             <div>
-                <h3>{{ error_response }}</h3>
+                <br>
+                <h3>Total Clicks:</h3>
+                <b><p>{{ clicks }}</p></b>
             </div>
             {% endif %}
-            {% if short_url %}
+            {% if error %}
             <div>
-                <h3>New URL:</h3>
-                <b><p>{{ short_url }}</p></b>
-            </div>
-            <div>
-                <h3>Unique ID:</h3>
-                <b><p>{{ unique_id }}</p></b>
+                <h3>{{ error }}</h3>
             </div>
             {% endif %}
         </div>
