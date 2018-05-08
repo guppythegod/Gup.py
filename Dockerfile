@@ -17,4 +17,4 @@ RUN python3 -m pip install -r requirements.txt
 EXPOSE 80
 
 # RUNS THE SERVER FILE
-CMD ["python3", "server.py"]
+CMD ["python3", "application.py"]
